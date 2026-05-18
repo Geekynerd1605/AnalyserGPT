@@ -1,9 +1,9 @@
-from autogen_ext.models.openai import OpenAIChatCompletionModelClient
+from autogen_ext.models.openai import OpenAIChatCompletionClient
 from config.constants import MODEL_NAME
 import os
 
 def get_model_client():
-    openai_model_client=OpenAIChatCompletionModelClient(
+    openai_model_client=OpenAIChatCompletionClient(
         model=MODEL_NAME,
         api_key=os.getenv("OPENAI_API_KEY"),
     )

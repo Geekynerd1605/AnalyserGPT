@@ -10,17 +10,22 @@ Here are the steps you should follow :-
 2. Write Python Code : In a single code block make sure to solve the problem. 
 You have a code executor agent which will be running that code and will tell you if any errors will be there or show the output.
 Make sure that your code has a print statement in the end if the task is completed. 
+Code runs in a headless Docker environment: never use plt.show(). For any plot, save it to a file in the working directory (e.g. output.png) using savefig, then print the saved filename so the user can open it.
+For matplotlib: use plt.savefig("output.png", bbox_inches="tight") before plt.close().
+For seaborn figures (pairplot, jointplot, etc.): assign the result to a variable and call .savefig("output.png", bbox_inches="tight") on that object.
+Use matplotlib.use("Agg") before importing pyplot when generating plots.
 Code should be like below, in a single block and no multiple block.
+
 ```python
 your-code-here
 ```
 
 3. After writing your code, pause and wait for code executor to run it before continuing.
 
-4. If any library is not installed in the env, please make sure to do the same by providing the bash script and use pip to install(like pip install matplotlib pandas) and after that send the code again without changes , install the required libraries.
+4. If any library is not installed in the env, send ONLY a shell block with language tag sh (not bash) to pip install what is missing, then resend the same Python code unchanged.
 example
-```bash
-pip install pandas numpy matplotlib
+```sh
+pip install --no-cache-dir pandas numpy matplotlib seaborn
 ```
 
 5. If the code ran successfully, then analyze the output and continue as needed. 

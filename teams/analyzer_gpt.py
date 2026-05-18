@@ -1,7 +1,7 @@
 from autogen_agentchat.teams import RoundRobinGroupChat
 from autogen_agentchat.conditions import TextMentionTermination
-from agents.CodeExecutorAgent import getCodeExecutorAgent
-from agents.DataAnalyzerAgent import getDataAnalyzerAgent
+from agents.code_executor_agent import getCodeExecutorAgent
+from agents.data_analyzer_agent import getDataAnalyzerAgent
 
 
 def GetDataAnalyzerTeam(docker, model_client):
@@ -9,8 +9,8 @@ def GetDataAnalyzerTeam(docker, model_client):
     data_analyzer_agent=getDataAnalyzerAgent(model_client)
     text_mention_termination=TextMentionTermination('STOP')
     team=RoundRobinGroupChat(
-        agents=[data_analyzer_agent, code_executor_agent],
-        max_turns=10,
-        termination_condition=text_mention_termination
+        participants=[data_analyzer_agent, code_executor_agent],
+        max_turns=20,
+        termination_condition=text_mention_termination,
     )
     return team

@@ -1,4 +1,8 @@
 import asyncio
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from teams.analyzer_gpt import GetDataAnalyzerTeam
 from models.openai_model_client import get_model_client
 from config.docker_util import getDockerCommandLineCodeExecutor, start_docker_container, stop_docker_container
@@ -9,7 +13,7 @@ async def main():
     openai_model_client=get_model_client()
     team=GetDataAnalyzerTeam(docker, openai_model_client)
     try:
-        task="can you give me a graph of survived and died in my data titanic.csv"
+        task="can you give me a graph of flowers in my data iris.csv"
         await start_docker_container(docker)
         async for message in team.run_stream(task=task):
             print(message)

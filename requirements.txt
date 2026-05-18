@@ -28,5 +28,5 @@ yfinance
 langchain-experimental
 autogen-agentchat
 autogen-core
-autogen-ext[http-tool,openai]
+autogen-ext[http-tool,openai, docker]
 docker

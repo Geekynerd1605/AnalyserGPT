@@ -1,0 +1,24 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib
+
+# Use 'Agg' backend for matplotlib to save plots as files
+matplotlib.use("Agg")
+
+# Load the iris.csv data
+data = pd.read_csv('iris.csv')
+
+# Plotting the count of each flower variety
+variety_count = data['variety'].value_counts()
+
+# Create a bar plot
+plt.figure(figsize=(8, 6))
+variety_count.plot(kind='bar')
+plt.title('Count of Iris Flower Varieties')
+plt.xlabel('Variety')
+plt.ylabel('Count')
+
+# Save the plot to a file
+plt.savefig("iris_variety_count.png", bbox_inches="tight")
+
+print("Plot saved as 'iris_variety_count.png'.")
