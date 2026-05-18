@@ -30,3 +30,4 @@ autogen-agentchat
 autogen-core
 autogen-ext[http-tool,openai, docker]
 docker
+streamlit
