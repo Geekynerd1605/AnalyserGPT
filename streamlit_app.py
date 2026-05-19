@@ -12,6 +12,14 @@ load_dotenv()
 st.title("Analyser GPT - Digital Data Analyzer")
 uploaded_file = st.file_uploader("Upload a CSV file", type=["csv"])
 
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
+
+if 'autogen_team_state' not in st.session_state:
+    st.session_state.autogen_team_state = None
+if('images_shown') not in st.session_state:
+    st.session_state.images_shown = []
+    
 task=st.chat_input("Enter your text here...")
 
 async def run_analyzer_gpt(docker, model_client, task):
@@ -19,22 +27,30 @@ async def run_analyzer_gpt(docker, model_client, task):
         await start_docker_container(docker)
         team=GetDataAnalyzerTeam(docker, model_client)
 
+        if st.session_state.autogen_team_state is not None:
+            await team.load_state(st.session_state.autogen_team_state)
+
         async for message in team.run_stream(task=task):
             if isinstance(message, TextMessage):
-                if message.source == 'user':
+                if message.source.startswith('user'):
                     with st.chat_message('User', avatar='👤'):
                         st.markdown(message.content)
-                elif message.source == 'DataAnalyzerAgent':
+                elif message.source.startswith('DataAnalyzerAgent'):
                     with st.chat_message('Data Analyzer', avatar='🤖'):
                         st.markdown(message.content)
                 
-                elif message.source == 'CodeExecutorAgent':
+                elif message.source.startswith('CodeExecutorAgent'):
                     with st.chat_message('Data Analyzer', avatar='💻'):
                         st.markdown(message.content)
+                st.session_state.messages.append(message.content)
                 # else:
                 #     st.markdown(message.content)
             elif isinstance(message, TaskResult):
                 st.markdown(f"Stop Reason: {message.stop_reason}")
+                st.session_state.messages.append(message.stop_reason)
+            
+        st.session_state.autogen_team_state = await team.save_state()
+ 
         return None
 
     except Exception as e:
@@ -44,6 +60,9 @@ async def run_analyzer_gpt(docker, model_client, task):
     finally:
         await stop_docker_container(docker)
 
+if st.session_state.messages:
+    for msg in st.session_state.messages:
+        st.markdown(msg)
 
 if task:
     if uploaded_file is not None:
@@ -62,7 +81,7 @@ if task:
 
         if os.path.exists('tmp/output.png'):
             st.image('tmp/output.png', caption='Output Image')
-            
+
         else:
             st.success("Analysis completed successfully")
     else:
