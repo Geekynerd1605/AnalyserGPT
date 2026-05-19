@@ -1,0 +1,16 @@
+import pandas as pd
+
+# Load the CSV file into a DataFrame
+df = pd.read_csv('data.csv')  # Ensure the correct filename is used
+
+# Check the first few rows and column names to identify the relevant column
+print("Columns in the dataset:", df.columns)
+print(df.head())
+
+# Assuming 'Fatalities' (or similar) is the column representing deaths
+fatalities_column = 'Fatalities'  # Adjust if you find the actual column name
+
+# Calculate the total number of people who died
+total_deaths = df[fatalities_column].sum()
+
+print(f"The total number of people who died is: {total_deaths}")
