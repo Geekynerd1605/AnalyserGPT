@@ -201,5 +201,5 @@ python main.py
 |------|-------------|
 | **Guided project / course** | _Mayank Aggarwal_ |
 | **Original concept & walkthrough** | _Mayank Aggarwal_ |
-| **Libraries** | [Microsoft AutoGen](https://github.com/microsoft/autogen), [Streamlit](https://streamlit.io/), [OpenAI](https://openai.com/) |
+| **Libraries** | [Microsoft AutoGen](https://github.com/microsoft/autogen), (https://microsoft.github.io/autogen/stable//index.html), [Streamlit](https://streamlit.io/), [OpenAI](https://openai.com/) |
 | **Author** | [Geekynerd1605](https://github.com/Geekynerd1605) |
