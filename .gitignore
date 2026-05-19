@@ -1,1 +1,7 @@
 .env
+tmp/*
+config/__pycache__/*
+agents/prompts/__pycache__/*
+# agents/prompts/__pycache__/data_analyzer_message.cpython-312.pyc
+# config/__pycache__/constants.cpython-312.pyc
+# config/__pycache__/docker_util.cpython-312.pyc

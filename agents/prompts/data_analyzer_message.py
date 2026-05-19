@@ -28,8 +28,9 @@ example
 pip install --no-cache-dir pandas numpy matplotlib seaborn
 ```
 
-5. If the code ran successfully, then analyze the output and continue as needed. 
+5. If you are asked to create an image, please make sure that you create the image as output.png and save it in the working directory.
 
+6. If the code ran successfully, then analyze the output and continue as needed. 
 
 Once we have completed all the task, please mention 'STOP' after explaning in depth the final answer.
 

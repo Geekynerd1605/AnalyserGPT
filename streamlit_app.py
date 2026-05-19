@@ -5,6 +5,7 @@ from teams.analyzer_gpt import GetDataAnalyzerTeam
 from models.openai_model_client import get_model_client
 from config.docker_util import getDockerCommandLineCodeExecutor, start_docker_container, stop_docker_container
 from autogen_agentchat.messages import TextMessage
+from autogen_agentchat.base import TaskResult
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -19,7 +20,21 @@ async def run_analyzer_gpt(docker, model_client, task):
         team=GetDataAnalyzerTeam(docker, model_client)
 
         async for message in team.run_stream(task=task):
-            st.markdown(f"**(message.source)**: {message.content}")
+            if isinstance(message, TextMessage):
+                if message.source == 'user':
+                    with st.chat_message('User', avatar='👤'):
+                        st.markdown(message.content)
+                elif message.source == 'DataAnalyzerAgent':
+                    with st.chat_message('Data Analyzer', avatar='🤖'):
+                        st.markdown(message.content)
+                
+                elif message.source == 'CodeExecutorAgent':
+                    with st.chat_message('Data Analyzer', avatar='💻'):
+                        st.markdown(message.content)
+                # else:
+                #     st.markdown(message.content)
+            elif isinstance(message, TaskResult):
+                st.markdown(f"Stop Reason: {message.stop_reason}")
         return None
 
     except Exception as e:
@@ -33,7 +48,7 @@ async def run_analyzer_gpt(docker, model_client, task):
 if task:
     if uploaded_file is not None:
         if not os.path.exists('tmp'):
-            os.makedirs('tmp')
+            os.makedirs('tmp', exist_ok=True)
 
         with open('tmp/data.csv', 'wb') as f:
             f.write(uploaded_file.getvalue())
@@ -44,6 +59,10 @@ if task:
         error = asyncio.run(run_analyzer_gpt(docker, openai_model_client, task))
         if error:
             st.error(f"An error occurred: {error}")
+
+        if os.path.exists('tmp/output.png'):
+            st.image('tmp/output.png', caption='Output Image')
+            
         else:
             st.success("Analysis completed successfully")
     else:
