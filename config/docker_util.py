@@ -6,6 +6,8 @@ def getDockerCommandLineCodeExecutor():
         image='amancevice/pandas',
         work_dir=WORK_DIR_DOCKER,
         timeout=TIMEOUT_DOCKER,
+        # Keep container alive across Streamlit reruns (asyncio.run() ends each loop).
+        stop_container=False,
     )
     return docker
 

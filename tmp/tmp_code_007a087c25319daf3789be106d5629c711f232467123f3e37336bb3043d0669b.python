@@ -1,9 +1,0 @@
-import pandas as pd
-
-# Load the CSV file into a DataFrame
-df = pd.read_csv('data.csv')  # Ensure the correct filename is used
-
-# Count the number of people who died (where 'Survived' column is 0)
-total_deaths = (df['Survived'] == 0).sum()
-
-print(f"The total number of people who died is: {total_deaths}")

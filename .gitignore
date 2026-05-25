@@ -1,4 +1,10 @@
 .env
-tmp/*
-config/__pycache__/*
-agents/prompts/__pycache__/*
+
+# Runtime / generated
+tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
