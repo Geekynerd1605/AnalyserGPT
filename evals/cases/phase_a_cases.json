@@ -1,0 +1,76 @@
+{
+  "cases": [
+    {
+      "case_id": "iris_summary_stats",
+      "dataset": "iris.csv",
+      "prompt": "Give a concise summary of the dataset with row count, column names, and descriptive statistics.",
+      "tags": ["summary", "stats"]
+    },
+    {
+      "case_id": "iris_missing_values",
+      "dataset": "iris.csv",
+      "prompt": "Check missing values column-wise and explain whether the dataset has nulls.",
+      "tags": ["quality", "null-check"]
+    },
+    {
+      "case_id": "iris_scatter_chart",
+      "dataset": "iris.csv",
+      "prompt": "Create a scatter plot for sepal length vs petal length colored by species and save it as output.png.",
+      "tags": ["chart", "scatter"]
+    },
+    {
+      "case_id": "iris_species_counts",
+      "dataset": "iris.csv",
+      "prompt": "Count the number of rows per species and summarize which species has the highest count.",
+      "tags": ["groupby", "counts"]
+    },
+    {
+      "case_id": "iris_grouped_means",
+      "dataset": "iris.csv",
+      "prompt": "Calculate mean sepal length and mean petal length for each species and explain key differences.",
+      "tags": ["groupby", "means"]
+    },
+    {
+      "case_id": "iris_correlation_matrix",
+      "dataset": "iris.csv",
+      "prompt": "Compute the correlation matrix for numeric columns and highlight the strongest positive correlation.",
+      "tags": ["correlation", "stats"]
+    },
+    {
+      "case_id": "iris_pairplot_chart",
+      "dataset": "iris.csv",
+      "prompt": "Create a pairplot for numeric features colored by species and save it as output.png.",
+      "tags": ["chart", "pairplot"]
+    },
+    {
+      "case_id": "iris_histogram_chart",
+      "dataset": "iris.csv",
+      "prompt": "Create a histogram of petal length with an informative title and save it as output.png.",
+      "tags": ["chart", "histogram"]
+    },
+    {
+      "case_id": "iris_boxplot_chart",
+      "dataset": "iris.csv",
+      "prompt": "Create a boxplot of sepal width by species and save it as output.png.",
+      "tags": ["chart", "boxplot"]
+    },
+    {
+      "case_id": "iris_outlier_check",
+      "dataset": "iris.csv",
+      "prompt": "Use the IQR method to estimate outliers for petal length and report how many outliers exist.",
+      "tags": ["quality", "outliers"]
+    },
+    {
+      "case_id": "iris_filter_and_compare",
+      "dataset": "iris.csv",
+      "prompt": "Compare average petal width between setosa and virginica and report the absolute difference.",
+      "tags": ["filter", "comparison"]
+    },
+    {
+      "case_id": "iris_top_rows_preview",
+      "dataset": "iris.csv",
+      "prompt": "Show the first 5 rows and explain what each column appears to represent.",
+      "tags": ["preview", "schema"]
+    }
+  ]
+}

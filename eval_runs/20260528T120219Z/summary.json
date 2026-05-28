@@ -1,0 +1,37 @@
+{
+  "started_at_utc": "2026-05-28T12:02:19.191431+00:00",
+  "completed_at_utc": "2026-05-28T12:03:26.876969+00:00",
+  "total_cases": 3,
+  "passed_cases": 3,
+  "pass_rate": 1.0,
+  "avg_score": 0.75,
+  "cases": [
+    {
+      "case_id": "iris_summary_stats",
+      "score": 0.75,
+      "execution_success": 1,
+      "task_completion": 1,
+      "code_generated": 1,
+      "chart_generated": 0,
+      "elapsed_seconds": 8.969
+    },
+    {
+      "case_id": "iris_missing_values",
+      "score": 0.75,
+      "execution_success": 1,
+      "task_completion": 1,
+      "code_generated": 1,
+      "chart_generated": 0,
+      "elapsed_seconds": 5.541
+    },
+    {
+      "case_id": "iris_scatter_chart",
+      "score": 0.75,
+      "execution_success": 0,
+      "task_completion": 1,
+      "code_generated": 1,
+      "chart_generated": 1,
+      "elapsed_seconds": 41.818
+    }
+  ]
+}

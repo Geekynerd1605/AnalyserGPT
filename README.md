@@ -21,7 +21,7 @@ Exploratory data analysis often requires switching between spreadsheets, noteboo
 - Accepting **natural-language questions** about uploaded CSV data
 - Using an **LLM agent** to plan analysis and generate Python code
 - Executing code **safely in Docker** so arbitrary analysis does not run on the host machine
-- Surfacing **text answers and visualizations** (e.g. `output.png`) in a simple **Streamlit** chat UI
+- Surfacing **text answers and visualizations** (all generated `*.png` files) in a polished **Streamlit** chat UI
 
 The goal is to make data exploration faster, safer, and more accessible—especially for guided learning and portfolio demonstrations.
 
@@ -44,7 +44,7 @@ flowchart TB
 
     subgraph Runtime["Isolated Runtime"]
         DK[Docker Container<br/>amancevice/pandas image]
-        WD[(tmp/ working dir<br/>data.csv · output.png)]
+        WD[(tmp/ working dir<br/>data.csv · *.png)]
     end
 
     U --> UP
@@ -65,7 +65,7 @@ flowchart TB
 2. **DataAnalyzerAgent** explains a plan, emits Python (or shell for `pip install`) in fenced blocks.
 3. **CodeExecutorAgent** runs that code inside **Docker** with `tmp/` mounted as the working directory.
 4. Agents iterate until the analyzer emits **STOP** (termination condition).
-5. Streamlit displays the conversation and any generated image (e.g. `tmp/output.png`).
+5. Streamlit displays the conversation, generated charts in-thread, and chart download buttons.
 
 ---
 
@@ -79,6 +79,7 @@ flowchart TB
 | **Code execution** | `DockerCommandLineCodeExecutor` (sandboxed) |
 | **Runtime image** | `amancevice/pandas` (pandas, numpy, matplotlib-friendly) |
 | **Data / viz** | pandas, matplotlib, seaborn (installed in container as needed) |
+| **Evaluation (Phase A)** | Local eval runner (`evals/runner.py`) with benchmark cases, artifact logging, and summary reports |
 | **Config** | `python-dotenv`, environment variables |
 | **Infra** | Docker Engine |
 
@@ -100,7 +101,7 @@ flowchart TB
 ```
 User: Can you give me a graph of flowers in my data iris.csv?
 
-Data Analyzer: I'll load iris.csv, explore columns, then create a scatter plot...
+Data Analyzer: I'll load data.csv, explore columns, then create a scatter plot...
 [Python code block → executed in Docker]
 
 Code Executor: Execution successful. Saved output.png
@@ -136,6 +137,13 @@ AnalyserGPT/
 │   ├── constants.py          # model name, Docker timeout, work dir
 │   └── docker_util.py        # Docker executor lifecycle
 ├── models/openai_model_client.py
+├── evals/
+│   ├── runner.py             # Phase A eval runner
+│   ├── schema.py             # Pydantic eval-case schema
+│   ├── README.md             # eval usage docs
+│   └── cases/
+│       └── phase_a_cases.json
+├── eval_runs/                # generated per-run eval artifacts (created after running evals)
 ├── docs/
 │   ├── assets/sample-output.png
 │   └── screenshots/          # add your UI screenshots here
@@ -183,7 +191,26 @@ streamlit run streamlit_app.py
 
 1. Upload a **CSV** file.
 2. Type your question in the chat box.
-3. Wait for agents to finish; charts appear if `tmp/output.png` is created.
+3. Wait for agents to finish; generated charts (`*.png`) appear in the chat with download buttons.
+
+### Run evaluation layer (Phase A)
+
+```bash
+python3 evals/runner.py
+```
+
+Optional flags:
+
+```bash
+python3 evals/runner.py --max-cases 1
+python3 evals/runner.py --cases-file evals/cases/phase_a_cases.json
+```
+
+Eval outputs are written to:
+
+- `eval_runs/<timestamp>/cases/*.json` (per-case artifacts)
+- `eval_runs/<timestamp>/summary.json`
+- `eval_runs/<timestamp>/summary.md`
 
 ### CLI test (optional)
 
